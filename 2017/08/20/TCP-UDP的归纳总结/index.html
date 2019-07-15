@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="wjExcceed">
+
+
+
+<meta name="description" content="&amp;emsp;&amp;emsp;运输层是整个网络体系结构中的关键层次之一，它有一个很重要的功能就是复用和分用。这里的“复用”是指在发送方不同的应用进程都可以使用同一个运输层协议传输数据，而“分用”是指接收方的运输层在剥去报文的首部后就能够把这些数据正确交付到目的应用进程。">
+<meta name="keywords" content="record,network">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCP&#x2F;UDP的归纳总结">
+<meta property="og:url" content="/2017/08/20/TCP-UDP的归纳总结/index.html">
+<meta property="og:site_name" content="巴扎嘿的博客">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;运输层是整个网络体系结构中的关键层次之一，它有一个很重要的功能就是复用和分用。这里的“复用”是指在发送方不同的应用进程都可以使用同一个运输层协议传输数据，而“分用”是指接收方的运输层在剥去报文的首部后就能够把这些数据正确交付到目的应用进程。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="/2017/08/20/TCP-UDP的归纳总结/UDP用户数据报的首部和伪首部.JPG">
+<meta property="og:image" content="/2017/08/20/TCP-UDP的归纳总结/TCP报文段的首部格式.JPG">
+<meta property="og:image" content="/2017/08/20/TCP-UDP的归纳总结/慢开始和拥塞避免.JPG">
+<meta property="og:image" content="/2017/08/20/TCP-UDP的归纳总结/快重传和快恢复.JPG">
+<meta property="og:image" content="/2017/08/20/TCP-UDP的归纳总结/TCP三次握手.JPG">
+<meta property="og:image" content="/2017/08/20/TCP-UDP的归纳总结/TCP连接释放过程.JPG">
+<meta property="og:image" content="/2017/08/20/TCP-UDP的归纳总结/TCP的有限状态机.JPG">
+<meta property="og:updated_time" content="2019-07-15T02:16:33.578Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TCP&#x2F;UDP的归纳总结">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;运输层是整个网络体系结构中的关键层次之一，它有一个很重要的功能就是复用和分用。这里的“复用”是指在发送方不同的应用进程都可以使用同一个运输层协议传输数据，而“分用”是指接收方的运输层在剥去报文的首部后就能够把这些数据正确交付到目的应用进程。">
+<meta name="twitter:image" content="/2017/08/20/TCP-UDP的归纳总结/UDP用户数据报的首部和伪首部.JPG">
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="巴扎嘿的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>TCP/UDP的归纳总结 | 巴扎嘿的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">wjExcceed</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">a newbie&#39;s blog</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OAuth/">OAuth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-System/">Operating System</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fix-bug/">fix bug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/programing/">programing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/record/">record</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">wjExcceed</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">wjExcceed</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">a newbie&#39;s blog</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-TCP-UDP的归纳总结" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/20/TCP-UDP的归纳总结/" class="article-date">
+      <time datetime="2017-08-20T10:39:36.000Z" itemprop="datePublished">2017-08-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      TCP/UDP的归纳总结
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/record/">聚沙成塔</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/network/">network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/record/">record</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <!--TOC-->
+<p>&emsp;&emsp;运输层是整个网络体系结构中的关键层次之一，它有一个很重要的功能就是复用和分用。这里的“复用”是指在发送方不同的应用进程都可以使用同一个运输层协议传输数据，而“分用”是指接收方的运输层在剥去报文的首部后就能够把这些数据正确交付到目的应用进程。<br><a id="more"></a></p>
+<p>从这里可以看出网络层和运输层有明显的区别。网络层是为主机之间提供逻辑通信，而运输层为应用进程之间提供端到端的逻辑通信。</p>
+<h2 id="用户数据协议UDP的特点"><a href="#用户数据协议UDP的特点" class="headerlink" title="用户数据协议UDP的特点"></a>用户数据协议UDP的特点</h2><ul>
+<li><p>UDP是无连接的，即发送数据之前不需要建立连接（当然发送数据结束时也没有连接可以释放），因此减少了开销和发送数据之前的时延。</p>
+</li>
+<li><p>UDP使用尽最大努力交付，即不保证可靠交付，因此主机不需要维持复杂的连接状态表。</p>
+</li>
+<li><p>UDP是面向报文的。发送方的UDP对应用程序交下来的报文，在添加手部后就向下交付给IP层。UDP对应用层家下来的报文，既不合并，也不拆分，而是保留这些文件的边界。</p>
+</li>
+<li><p>UDP没有拥塞控制，因此网络出现的拥塞不会使源主机的发送速率降低。这对实时应用是很重要的。很多实时应用（如IP电话、实时视频会议等）要求源主机以恒定的速率发送数据，并且允许在网络发生拥塞时丢失一些数据，但却不允许数据有太大的时延。</p>
+</li>
+<li><p>UDP支持一对一、一对多、多对一和多对多的交互通信。</p>
+</li>
+<li><p>UDP的首部开销校，只有8个字节，比TCP的20个字节的首部要短。</p>
+</li>
+</ul>
+<h2 id="UDP的首部格式"><a href="#UDP的首部格式" class="headerlink" title="UDP的首部格式"></a>UDP的首部格式</h2><img src="/2017/08/20/TCP-UDP的归纳总结/UDP用户数据报的首部和伪首部.JPG" title="UDP用户数据报的首部和伪首部">
+<p>&emsp;&emsp;用户数据包UDP有两个字段：数据字段和首部字段。首部字段很简单，只有8个字节，由四个字段组成，每个字段的长度都是两个字节。各字段意义如下：<br>(1)源端口：    源端口号，在需要对方回信时选用，不需要时可用全0。<br>(2)目的端口：    目的端口号。这在重点交付报文时必须要使用到。<br>(3)长度：    UDP用户数据包的长度，其最小值是8（仅有首部）<br>(4)检验和：    检测UDP用户数据包在传输中是否有错。有错就丢弃。<br>注意：IP数据包的检验和只检验IP数据包的首部，但UDP的检验和是把首部和数据部分一起都检验。</p>
+<h2 id="传输控制协议TCP的特点"><a href="#传输控制协议TCP的特点" class="headerlink" title="传输控制协议TCP的特点"></a>传输控制协议TCP的特点</h2><ul>
+<li><p>TCP是面向连接的运输层协议。这就是说，应用程序在使用TCP协议之前，必须先建立TCP连接。在传输数据完毕后，必须释放已经建立的TCP连接。</p>
+</li>
+<li><p>每一条TCP连接只能有两个端点。每一条TCP连接只能是点对点的（一对一）。</p>
+</li>
+<li><p>TCP提供可靠交付的服务。也就是说，通过TCP连接传送的数据，无差错、不丢失、不重复、并且按序到达。</p>
+</li>
+<li><p>TCP提供全双工通信。TCP允许通信双方的应用进程在任何时候都能发送数据。TCP连接的两端都设有发送缓存和接收缓存，用来临时存放双向通信的数据。在发送时，应用程序在把数据传送给TCP缓存后，就可以做自己的事，而TCP在合适的时候把数据发送出去。在接收时，TCP把收到的数据放入缓存，上层的应用进程在合适的时候读取缓存中的数据。</p>
+</li>
+<li><p>面向字节流。TCP中的“流”指的是流入到进程或从进程流出的字节序列。“面向字节流”的含义是虽然应用程序和TCP的交互是一次一个数据块（大小不等），但TCP把应用程序交下来的数据看成仅仅是一连串的无结构字节流。TCP并不知道所传送的字节流的含义。TCP不保证接收方应用程序所收到的数据块和发送方应用程序所发出的数据块具有对应大小的关系。</p>
+</li>
+</ul>
+<h2 id="TCP报文段的首部格式"><a href="#TCP报文段的首部格式" class="headerlink" title="TCP报文段的首部格式"></a>TCP报文段的首部格式</h2><p>TCP虽然是面向字节流的，但TCP传送的数据单元却是报文段。一个TCP报文段分为首部和数据两部分。TCP报文段首部的前20个字节是固定的，后面有4N字节是根据需要而增加的选项。所以TCP首部的最小长度是20字节。</p>
+<img src="/2017/08/20/TCP-UDP的归纳总结/TCP报文段的首部格式.JPG" title="TCP报文段的首部格式">
+<p>(1)源端口和目的端口：    各占两个字节，与UDP的分用相似，TCP的分用功能也是通过端口实现。</p>
+<p>(2)序号：    占4字节。TCP是面向字节流的。在一个TCP连接中传送的字节流中的每一个字节都按顺序编号。整个要传送的字节流的起始序号必须在连接建立时设置。首部中的序号字段值指的是本报文段所发送的数据的第一个字节的序号。</p>
+<p>(3)确认号：    占4字节。是期望收到对方下一个报文段的第一个数据字节的序号。<br><strong>若确认号=N，则表明：到序号N-1为止的所有数据都已正确收到。</strong></p>
+<p>(4)数据偏移：    占4bit。他指出TCP报文段的数据起始处距离TCP报文段的起始处有多远。这个字段实际上指出TCP报文段的首部长度。</p>
+<p>(5)保留：    占6bit。保留为今后使用，目前应置为0。</p>
+<p>(6)紧急URG：    1bit。当URG=1时，表明紧急指针字段有效。他告诉系统此报文段中有紧急数据，应尽快传送，而不按原来的排队顺序来传送。于是发送方TCP就把紧急数据插入到本报文段数据的最前面，而在紧急数据后面的数据仍是普通数据，这时要与首部中紧急指针字段配合使用。</p>
+<p>(7)确认ACK：    1bit。仅当ACK=1时确认号字段才有效。当ACK=0时，确认号无效。TCP规定，在连接建立后所有传送的报文段都必须把ACK置为1。</p>
+<p>(8)推送PSH：    1bit。当两个应用进程进行交互式通信时，有时在一端的应用进程希望在键入一个命令后立即就能够收到对方的响应。在这种情况下，TCP就可以使用推送操作。这时，发送方TCP把PSH置为1，并立即创建一个报文段发送出去。接收方TCP收到PSH=1的报文段，就尽快地交付给接收应用进程，而不再等到整个缓存都填满了之后再向上交付。</p>
+<p>(9)复位RST：    1bit。当RST=1时，表明TCP连接中出现严重差错，必须释放连接，然后再重新建立运输连接。RST置为1还用来拒绝一个非法的报文段或拒绝打开一个连接。</p>
+<p>(10)同步SYN：    1bit。在连接建立时用来同步序号。当SYN=1而ACK=0时，表明这是一个连接请求报文段。对方若同意建立连接，则应在响应的报文段中使SYN=1和ACK=1。因此，SYN置为1表示这是一个连接请求或连接接收报文。</p>
+<p>(11)终止FIN：    1bit。用来释放一个连接。当FIN=1时，表明此报文段的发送方的数据已发送完毕，并要求释放运输连接。</p>
+<p>(12)窗口：    占2个字节。窗口值是0~2^16-1之间的整数。窗口指的是发送本报文段的一方的接收窗口。窗口值告诉对方：从本报文段首部中的确认号算起，接收方目前允许对方放松的数据量。窗口值作为接收方让发送方设置其发送窗口的依据。</p>
+<p>(13)检验和：    占2个字节。检验和字段检验的范围包括首部和数据两部分。和UDP用户数据报一样，在计算检验和时，要在TCP报文段的前面加上12字节的伪首部。TCP的协议号为6，</p>
+<p>(14)紧急指针：    占2个字节。紧急指针仅在URG=1时有意义，它指出本报文段中的紧急数据的字节数，紧急指针指出了紧急数据的末尾在报文段中的位置。值得注意的是，即使窗口为0时也可放松紧急数据。</p>
+<p>(15)选项：    长度可变，最长可达40字节。当没有使用选项时，TCP的首部长度是20字节。TCP的最大报文段长度MSS默认情况下536字节。MSS是每一个TCP报文段中的数据字段的最大长度。</p>
+<h2 id="TCP可靠传输的实现"><a href="#TCP可靠传输的实现" class="headerlink" title="TCP可靠传输的实现"></a>TCP可靠传输的实现</h2><ol>
+<li><p>以字节为单位的滑动窗口</p>
+</li>
+<li><p>超时重传时间的选择</p>
+</li>
+<li><p>选择确认SACK</p>
+</li>
+</ol>
+<h2 id="TCP的流量控制"><a href="#TCP的流量控制" class="headerlink" title="TCP的流量控制"></a>TCP的流量控制</h2><ol>
+<li>利用滑动窗口实现流量控制</li>
+</ol>
+<p><strong>注意：可靠传输和流量控制是通过滑动窗口实现的，而拥塞控制是由拥塞窗口来控制的，两者切不可搞混！</strong></p>
+<h2 id="TCP的拥塞控制"><a href="#TCP的拥塞控制" class="headerlink" title="TCP的拥塞控制"></a>TCP的拥塞控制</h2><h3 id="慢开始和拥塞避免"><a href="#慢开始和拥塞避免" class="headerlink" title="慢开始和拥塞避免"></a>慢开始和拥塞避免</h3><img src="/2017/08/20/TCP-UDP的归纳总结/慢开始和拥塞避免.JPG" title="慢开始和拥塞避免">
+<h3 id="快重传和快恢复"><a href="#快重传和快恢复" class="headerlink" title="快重传和快恢复"></a>快重传和快恢复</h3><img src="/2017/08/20/TCP-UDP的归纳总结/快重传和快恢复.JPG" title="快重传和快恢复">
+<h2 id="TCP的运输连接管理"><a href="#TCP的运输连接管理" class="headerlink" title="TCP的运输连接管理"></a>TCP的运输连接管理</h2><h3 id="TCP三次握手"><a href="#TCP三次握手" class="headerlink" title="TCP三次握手"></a>TCP三次握手</h3><img src="/2017/08/20/TCP-UDP的归纳总结/TCP三次握手.JPG" title="TCP三次握手">
+<h3 id="TCP四次挥手"><a href="#TCP四次挥手" class="headerlink" title="TCP四次挥手"></a>TCP四次挥手</h3><img src="/2017/08/20/TCP-UDP的归纳总结/TCP连接释放过程.JPG" title="TCP连接释放过程.JPG">
+<h3 id="TCP的有限状态机"><a href="#TCP的有限状态机" class="headerlink" title="TCP的有限状态机"></a>TCP的有限状态机</h3><img src="/2017/08/20/TCP-UDP的归纳总结/TCP的有限状态机.JPG" title="TCP的有限状态机.JPG">
+<h3 id="为什么A在TIME-WAIT状态必须等待2MSL（最大报文段寿命，Maximum-Segment-Lifetime）？"><a href="#为什么A在TIME-WAIT状态必须等待2MSL（最大报文段寿命，Maximum-Segment-Lifetime）？" class="headerlink" title="为什么A在TIME-WAIT状态必须等待2MSL（最大报文段寿命，Maximum Segment Lifetime）？"></a>为什么A在TIME-WAIT状态必须等待2MSL（最大报文段寿命，Maximum Segment Lifetime）？</h3><p>&emsp;&emsp;第一，为了保证A发送的最后一个ACK报文段能够到达B。这个ACK报文段有可能丢失，因而使处在LAST-ACK状态的B收不到对已发送的FIN+ACK报文段的确认。B会超时重传这个FIN+ACK报文段，而A就能在2MSL时间内收到这个重传的FIN+ACK报文段。接着A重传一次确认，重新启动2MSL计时器。最后A和B都正常进入到CLOSED状态。如果A在TIME-WAIT状态不等待一段时间，而是在发送完ACK报文段后立即释放连接，那么就无法收到B重传的FIN+ACK报文段，因而也不会再发送一次确认报文段。这样，B就无法按照正常步骤进入CLOSED状态。</p>
+<p>&emsp;&emsp;第二，防止“已失效的连接请求报文段”出现在本链接中。A在发送完最后一个ACK报文段后，再经过实践2MSL，就可以使本连接持续的时间内所产生的所有报文段都从网络中消失。这样就可以使下一个新的连接中不会出现这种旧的连接请求报文段。B只要收到了A发出的确认，就进入CLOSED状态。同样，B在撤销响应的传输控制块TCB后，就结束了这次的TCP连接。</p>
+<h2 id="在浏览器中输入www-baidu-com后执行的全部过程"><a href="#在浏览器中输入www-baidu-com后执行的全部过程" class="headerlink" title="在浏览器中输入www.baidu.com后执行的全部过程"></a>在浏览器中输入<a href="http://www.baidu.com后执行的全部过程" target="_blank" rel="noopener">www.baidu.com后执行的全部过程</a></h2><p>1、客户端浏览器通过DNS解析到<a href="http://www.baidu.com的IP地址220.181.27.48，通过这个IP地址找到客户端到服务器的路径。客户端浏览器发起一个HTTP会话到220.161.27.48，然后通过TCP进行封装数据包，输入到网络层。" target="_blank" rel="noopener">www.baidu.com的IP地址220.181.27.48，通过这个IP地址找到客户端到服务器的路径。客户端浏览器发起一个HTTP会话到220.161.27.48，然后通过TCP进行封装数据包，输入到网络层。</a></p>
+<p>2、在客户端的传输层，把HTTP会话请求分成报文段，添加源和目的端口，如服务器使用80端口监听客户端的请求，客户端由系统随机选择一个端口如5000，与服务器进行交换，服务器把相应的请求返回给客户端的5000端口。然后使用IP层的IP地址查找目的端。</p>
+<p>3、客户端的网络层不用关系应用层或者传输层的东西，主要做的是通过查找路由表确定如何到达服务器，期间可能经过多个路由器，这些都是由路由器来完成的工作，我不作过多的描述，无非就是通过查找路由表决定通过那个路径到达服务器。</p>
+<p>4、客户端的链路层，包通过链路层发送到路由器，通过邻居协议查找给定IP地址的MAC地址，然后发送ARP请求查找目的地址，如果得到回应后就可以使用ARP的请求应答交换的IP数据包现在就可以传输了，然后发送IP数据包到达服务器的地址。</p>
+<h2 id="扩展问题"><a href="#扩展问题" class="headerlink" title="扩展问题"></a>扩展问题</h2><h3 id="DNS域名系统，简单描述其工作原理。"><a href="#DNS域名系统，简单描述其工作原理。" class="headerlink" title="DNS域名系统，简单描述其工作原理。"></a>DNS域名系统，简单描述其工作原理。</h3><p>当DNS客户机需要在程序中使用名称时，它会查询DNS服务器来解析该名称。客户机发送的每条查询信息包括三条信息：包括：指定的DNS域名，指定的查询类型，DNS域名的指定类别。基于UDP服务，端口53. 该应用一般不直接为用户使用，而是为其他应用服务，如HTTP，SMTP等在其中需要完成主机名到IP地址的转换。</p>
+<h3 id="面向连接和非面向连接的服务的特点是什么？"><a href="#面向连接和非面向连接的服务的特点是什么？" class="headerlink" title="面向连接和非面向连接的服务的特点是什么？"></a>面向连接和非面向连接的服务的特点是什么？</h3><p>面向连接的服务，通信双方在进行通信之前，要先在双方建立起一个完整的可以彼此沟通的通道，在通信过程中，整个连接的情况一直可以被实时地监控和管理。</p>
+<p>非面向连接的服务，不需要预先建立一个联络两个通信节点的连接，需要通信的时候，发送节点就可以往网络上发送信息，让信息自主地在网络上去传，一般在传输的过程中不再加以监控。</p>
+<h3 id="TCP的三次握手过程？为什么会采用三次握手，若采用二次握手可以吗？"><a href="#TCP的三次握手过程？为什么会采用三次握手，若采用二次握手可以吗？" class="headerlink" title="TCP的三次握手过程？为什么会采用三次握手，若采用二次握手可以吗？"></a>TCP的三次握手过程？为什么会采用三次握手，若采用二次握手可以吗？</h3><p>答：建立连接的过程是利用客户服务器模式，假设主机A为客户端，主机B为服务器端。</p>
+<p>（1）TCP的三次握手过程：主机A向B发送连接请求；主机B对收到的主机A的报文段进行确认；主机A再次对主机B的确认进行确认。</p>
+<p>（2）采用三次握手是为了防止失效的连接请求报文段突然又传送到主机B，因而产生错误。失效的连接请求报文段是指：主机A发出的连接请求没有收到主机B的确认，于是经过一段时间后，主机A又重新向主机B发送连接请求，且建立成功，顺序完成数据传输。考虑这样一种特殊情况，主机A第一次发送的连接请求并没有丢失，而是因为网络节点导致延迟达到主机B，主机B以为是主机A又发起的新连接，于是主机B同意连接，并向主机A发回确认，但是此时主机A根本不会理会，主机B就一直在等待主机A发送数据，导致主机B的资源浪费。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/08/20/TCP-UDP的归纳总结/">TCP/UDP的归纳总结</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">wjExcceed</a></p>
+        <p><span>发布时间:</span>2017-08-20, 18:39:36</p>
+        <p><span>最后更新:</span>2019-07-15, 10:16:33</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/08/20/TCP-UDP的归纳总结/" title="TCP/UDP的归纳总结">/2017/08/20/TCP-UDP的归纳总结/</a>
+            <span class="copy-path" data-clipboard-text="原文: /2017/08/20/TCP-UDP的归纳总结/　　作者: wjExcceed" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/08/20/I-O多路复用/">
+                    I/O多路复用
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/08/19/Cookie-Session机制/">
+                    Cookie/Session机制
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#用户数据协议UDP的特点"><span class="toc-number">1.</span> <span class="toc-text">用户数据协议UDP的特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UDP的首部格式"><span class="toc-number">2.</span> <span class="toc-text">UDP的首部格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#传输控制协议TCP的特点"><span class="toc-number">3.</span> <span class="toc-text">传输控制协议TCP的特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP报文段的首部格式"><span class="toc-number">4.</span> <span class="toc-text">TCP报文段的首部格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP可靠传输的实现"><span class="toc-number">5.</span> <span class="toc-text">TCP可靠传输的实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP的流量控制"><span class="toc-number">6.</span> <span class="toc-text">TCP的流量控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP的拥塞控制"><span class="toc-number">7.</span> <span class="toc-text">TCP的拥塞控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#慢开始和拥塞避免"><span class="toc-number">7.1.</span> <span class="toc-text">慢开始和拥塞避免</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#快重传和快恢复"><span class="toc-number">7.2.</span> <span class="toc-text">快重传和快恢复</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP的运输连接管理"><span class="toc-number">8.</span> <span class="toc-text">TCP的运输连接管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP三次握手"><span class="toc-number">8.1.</span> <span class="toc-text">TCP三次握手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP四次挥手"><span class="toc-number">8.2.</span> <span class="toc-text">TCP四次挥手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP的有限状态机"><span class="toc-number">8.3.</span> <span class="toc-text">TCP的有限状态机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么A在TIME-WAIT状态必须等待2MSL（最大报文段寿命，Maximum-Segment-Lifetime）？"><span class="toc-number">8.4.</span> <span class="toc-text">为什么A在TIME-WAIT状态必须等待2MSL（最大报文段寿命，Maximum Segment Lifetime）？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在浏览器中输入www-baidu-com后执行的全部过程"><span class="toc-number">9.</span> <span class="toc-text">在浏览器中输入www.baidu.com后执行的全部过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#扩展问题"><span class="toc-number">10.</span> <span class="toc-text">扩展问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS域名系统，简单描述其工作原理。"><span class="toc-number">10.1.</span> <span class="toc-text">DNS域名系统，简单描述其工作原理。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#面向连接和非面向连接的服务的特点是什么？"><span class="toc-number">10.2.</span> <span class="toc-text">面向连接和非面向连接的服务的特点是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP的三次握手过程？为什么会采用三次握手，若采用二次握手可以吗？"><span class="toc-number">10.3.</span> <span class="toc-text">TCP的三次握手过程？为什么会采用三次握手，若采用二次握手可以吗？</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"TCP/UDP的归纳总结　| 巴扎嘿的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section id="comments">
+    <style> aside.comment-bar { margin: auto 30px; }</style>
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function(){
+            this.page.url = '/2017/08/20/TCP-UDP的归纳总结/';
+            this.page.identifier = '2017/08/20/TCP-UDP的归纳总结/';
+        };
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = '//[object Object].disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+</section>
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/08/20/I-O多路复用/" title="上一篇: I/O多路复用">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/08/19/Cookie-Session机制/" title="下一篇: Cookie/Session机制">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/a/">a</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/28/Java内存模型——JMM/">Java内存模型——JMM</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/聊聊操作系统/">聊聊操作系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/I-O多路复用/">I/O多路复用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/TCP-UDP的归纳总结/">TCP/UDP的归纳总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/19/Cookie-Session机制/">Cookie/Session机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/关于mina的知识整理/">关于mina的知识整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/HttpEntity出现的java-io-IOException-Stream-Closed/">HttpEntity出现的java.io.IOException:Stream Closed</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/16/数据库连接池/">数据库连接池</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/14/网易秋招笔试题/">网易秋招笔试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/09/JVM/">JVM梳理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/07/OAuth浅析/">OAuth浅析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/04/jdk编年史/">jdk编年史</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/02/java高并发/">java高并发</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/01/数据库的整理笔记/">数据库的整理笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/31/JIT/">JIT--即时编译</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/Computer Network/">数据链路层的要点</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2019 wjExcceed
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="wjExcceed">
+
+
+
+<meta name="description" content="&amp;emsp;&amp;emsp;Java语言自JDK 1.0版本以来经历了许多次更新，也大量在基本的程序库中增加了类别和包。从J2SE 1.4开始，Java语言的变动受到Java Community Process（JCP）的约束，JCP使用Java规范请求来建议和定义对Java平台内容的新增和修改。">
+<meta name="keywords" content="record">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jdk编年史">
+<meta property="og:url" content="/2017/08/04/jdk编年史/index.html">
+<meta property="og:site_name" content="巴扎嘿的博客">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;Java语言自JDK 1.0版本以来经历了许多次更新，也大量在基本的程序库中增加了类别和包。从J2SE 1.4开始，Java语言的变动受到Java Community Process（JCP）的约束，JCP使用Java规范请求来建议和定义对Java平台内容的新增和修改。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="/2017/08/04/jdk编年史/Cookie_管理类的关系.JPG">
+<meta property="og:updated_time" content="2019-07-15T02:16:33.349Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jdk编年史">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;Java语言自JDK 1.0版本以来经历了许多次更新，也大量在基本的程序库中增加了类别和包。从J2SE 1.4开始，Java语言的变动受到Java Community Process（JCP）的约束，JCP使用Java规范请求来建议和定义对Java平台内容的新增和修改。">
+<meta name="twitter:image" content="/2017/08/04/jdk编年史/Cookie_管理类的关系.JPG">
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="巴扎嘿的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>jdk编年史 | 巴扎嘿的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">wjExcceed</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">a newbie&#39;s blog</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OAuth/">OAuth</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-System/">Operating System</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fix-bug/">fix bug</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/programing/">programing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/record/">record</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">wjExcceed</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">wjExcceed</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">a newbie&#39;s blog</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-jdk编年史" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/04/jdk编年史/" class="article-date">
+      <time datetime="2017-08-04T11:57:58.000Z" itemprop="datePublished">2017-08-04</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      jdk编年史
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/record/">聚沙成塔</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/record/">record</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <!--TOC-->
+<p>&emsp;&emsp;Java语言自JDK 1.0版本以来经历了许多次更新，也大量在基本的程序库中增加了类别和包。从J2SE 1.4开始，Java语言的变动受到Java Community Process（JCP）的约束，JCP使用Java规范请求来建议和定义对Java平台内容的新增和修改。<br><a id="more"></a></p>
+<h2 id="Java-8-0"><a href="#Java-8-0" class="headerlink" title="Java 8.0"></a>Java 8.0</h2><h3 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h3><p>Java 8 引入的一个核心概念是函数式接口（Functional Interfaces）。通过在接口里面添加一个抽象方法，这些方法可以直接从接口中运行。如果一个接口定义个唯一一个抽象方法，那么这个接口就成为函数式接口。同时，引入了一个新的注解：@FunctionalInterface。可以把他它放在一个接口前，表示这个接口是一个函数式接口。这个注解是非必须的，只要接口只包含一个方法的接口，虚拟机会自动判断，不过最好在接口上使用注解 @FunctionalInterface 进行声明。在接口中添加了 @FunctionalInterface 的接口，只允许有一个抽象方法，否则编译器也会报错。</p>
+<p>java.lang.Runnable 就是一个函数式接口。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Lambda表达式"><a href="#Lambda表达式" class="headerlink" title="Lambda表达式"></a>Lambda表达式</h3><p>函数式接口的重要属性是：我们能够使用 Lambda 实例化它们，Lambda 表达式让你能够将函数作为方法参数，或者将代码作为数据对待。Lambda 表达式的引入给开发者带来了不少优点：在 Java 8 之前，匿名内部类，监听器和事件处理器的使用都显得很冗长，代码可读性很差，Lambda 表达式的应用则使代码变得更加紧凑，可读性增强；Lambda 表达式使并行操作大集合变得很方便，可以充分发挥多核 CPU 的优势，更易于为多核处理器编写代码；</p>
+<p>Lambda 表达式由三个部分组成：第一部分为一个括号内用逗号分隔的形式参数，参数是函数式接口里面方法的参数；第二部分为一个箭头符号：-&gt;；第三部分为方法体，可以是表达式和代码块。语法如下：</p>
+<ol>
+<li><p>方法体为表达式，该表达式的值作为返回值返回。</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="params">(parameters)</span> -&gt;</span> expression</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法体为代码块，必须用 {} 来包裹起来，且需要一个 return 返回值，但若函数式接口里面方法返回值是 void，则无需返回值。</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="params">(parameters)</span> -&gt;</span> &#123; statements; &#125;</span><br><span class="line">例如，下面是使用匿名内部类和 Lambda 表达式的代码比较。</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>Java 8 在 java.util.function 中增加了不少新的函数式通用接口。例如：<br>Function&lt;T, R&gt;：将 T 作为输入，返回 R 作为输出，他还包含了和其他函数组合的默认方法。<br>Predicate<t> ：将 T 作为输入，返回一个布尔值作为输出，该接口包含多种默认方法来将 Predicate 组合成其他复杂的逻辑（与、或、非）。<br>Consumer<t> ：将 T 作为输入，不返回任何内容，表示在单个参数上的操作。</t></t></li>
+</ul>
+<h3 id="接口的增强"><a href="#接口的增强" class="headerlink" title="接口的增强"></a>接口的增强</h3><p>Java 8 对接口做了进一步的增强。在接口中可以添加使用 default 关键字修饰的非抽象方法。还可以在接口中定义静态方法。如今，接口看上去与抽象类的功能越来越类似了。</p>
+<ul>
+<li>默认方法</li>
+</ul>
+<p>Java 8 还允许我们给接口添加一个非抽象的方法实现，只需要使用 default 关键字即可，这个特征又叫做扩展方法。在实现该接口时，该默认扩展方法在子类上可以直接使用，它的使用方式类似于抽象类中非抽象成员方法。但扩展方法不能够重载 Object 中的方法。例如：toString、equals、 hashCode 不能在接口中被重载。</p>
+<p>例如，下面接口中定义了一个默认方法 count()，该方法可以在子类中直接使用。<br><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">DefaultFunInterface</span> </span>&#123;</span><br><span class="line"><span class="comment">//定义默认方法 count</span></span><br><span class="line"><span class="keyword">default</span> <span class="keyword">int</span> <span class="keyword">count</span>()&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SubDefaultFunClass</span> <span class="keyword">implements</span> <span class="title">DefaultFunInterface</span> </span>&#123;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args)&#123;</span><br><span class="line"><span class="comment">//实例化一个子类对象，改子类对象可以直接调用父接口中的默认方法 count</span></span><br><span class="line"> SubDefaultFunClass sub = <span class="keyword">new</span> SubDefaultFunClass();</span><br><span class="line">sub.<span class="keyword">count</span>();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>静态方法<br>在接口中，还允许定义静态的方法。接口中的静态方法可以直接用接口来调用。<br>例如，下面接口中定义了一个静态方法 find，该方法可以直接用 StaticFunInterface .find() 来调用。<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">StaticFunInterface</span> &#123;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">find</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TestStaticFun</span> &#123;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>)</span>&#123;</span><br><span class="line"><span class="comment">//接口中定义了静态方法 find 直接被调用</span></span><br><span class="line">StaticFunInterface.fine();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="集合之流式操作"><a href="#集合之流式操作" class="headerlink" title="集合之流式操作"></a>集合之流式操作</h3><p>Java 8 引入了流式操作（Stream），通过该操作可以实现对集合（Collection）的并行处理和函数式操作。根据操作返回的结果不同，流式操作分为中间操作和最终操作两种。最终操作返回一特定类型的结果，而中间操作返回流本身，这样就可以将多个操作依次串联起来。根据流的并发性，流又可以分为串行和并行两种。流式操作实现了集合的过滤、排序、映射等功能。</p>
+<p>Stream 和 Collection 集合的区别：Collection 是一种静态的内存数据结构，而 Stream 是有关计算的。前者是主要面向内存，存储在内存中，后者主要是面向 CPU，通过 CPU 实现计算。</p>
+<ul>
+<li>串行和并行的流</li>
+</ul>
+<p>流有串行和并行两种，串行流上的操作是在一个线程中依次完成，而并行流则是在多个线程上同时执行。并行与串行的流可以相互切换：通过 stream.sequential() 返回串行的流，通过 stream.parallel() 返回并行的流。相比较串行的流，并行的流可以很大程度上提高程序的执行效率。</p>
+<p>下面是分别用串行和并行的方式对集合进行排序。</p>
+<p><strong>串行排序：</strong><br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">List&lt;<span class="keyword">String</span>&gt; list = <span class="keyword">new</span> ArrayList&lt;<span class="keyword">String</span>&gt;();</span><br><span class="line"><span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">1000000</span>;i++)&#123;</span><br><span class="line"><span class="keyword">double</span> d = Math.<span class="built_in">random</span>()*<span class="number">1000</span>;</span><br><span class="line">list.add(d+<span class="string">""</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">long</span> start = System.nanoTime();<span class="comment">//获取系统开始排序的时间点</span></span><br><span class="line"><span class="keyword">int</span> count= (<span class="keyword">int</span>) ((<span class="built_in">Stream</span>) list.stream().sequential()).sorted().count();</span><br><span class="line"><span class="keyword">long</span> <span class="built_in">end</span> = System.nanoTime();<span class="comment">//获取系统结束排序的时间点</span></span><br><span class="line"><span class="keyword">long</span> ms = TimeUnit.NANOSECONDS.toMillis(<span class="built_in">end</span>-start);<span class="comment">//得到串行排序所用的时间</span></span><br><span class="line">System.out.<span class="built_in">println</span>(ms+”ms”);</span><br></pre></td></tr></table></figure></p>
+<p><strong>并行排序：</strong><br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">List&lt;<span class="keyword">String</span>&gt; list = <span class="keyword">new</span> ArrayList&lt;<span class="keyword">String</span>&gt;();</span><br><span class="line"><span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">1000000</span>;i++)&#123;</span><br><span class="line"><span class="keyword">double</span> d = Math.<span class="built_in">random</span>()*<span class="number">1000</span>;</span><br><span class="line">list.add(d+<span class="string">""</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">long</span> start = System.nanoTime();<span class="comment">//获取系统开始排序的时间点</span></span><br><span class="line"><span class="keyword">int</span> count = (<span class="keyword">int</span>)((<span class="built_in">Stream</span>) list.stream().parallel()).sorted().count();</span><br><span class="line"><span class="keyword">long</span> <span class="built_in">end</span> = System.nanoTime();<span class="comment">//获取系统结束排序的时间点</span></span><br><span class="line"><span class="keyword">long</span> ms = TimeUnit.NANOSECONDS.toMillis(<span class="built_in">end</span>-start);<span class="comment">//得到并行排序所用的时间</span></span><br><span class="line">System.out.<span class="built_in">println</span>(ms+”ms”);</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>中间操作</li>
+</ul>
+<p>该操作会保持 stream 处于中间状态，允许做进一步的操作。它返回的还是的 Stream，允许更多的链式操作。常见的中间操作有：<br>filter()：对元素进行过滤；<br>sorted()：对元素排序；<br>map()：元素的映射；<br>distinct()：去除重复元素；<br>subStream()：获取子 Stream 等。</p>
+<p>例如，下面是对一个字符串集合进行过滤，返回以“s”开头的字符串集合，并将该集合依次打印出来：<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">list.stream()</span><br><span class="line">.filter<span class="function"><span class="params">((s) -&gt; s.startsWith(<span class="string">"s"</span>))</span></span></span><br><span class="line"><span class="function">.<span class="title">forEach</span><span class="params">(System.out::println)</span>;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="注解的更新"><a href="#注解的更新" class="headerlink" title="注解的更新"></a>注解的更新</h3><p>对于注解，Java 8 主要有两点改进：类型注解和重复注解。<br>Java 8 的类型注解扩展了注解使用的范围。在该版本之前，注解只能是在声明的地方使用。现在几乎可以为任何东西添加注解：局部变量、类与接口，就连方法的异常也能添加注解。新增的两个注释的程序元素类型 ElementType.TYPE_USE 和 ElementType.TYPE_PARAMETER 用来描述注解的新场合。ElementType.TYPE_PARAMETER 表示该注解能写在类型变量的声明语句中。而 ElementType.TYPE_USE 表示该注解能写在使用类型的任何语句中（例如声明语句、泛型和强制转换语句中的类型）。</p>
+<p>在编译的时候被排查出来。Java 8 本身虽然没有自带类型检测的框架，但可以通过使用 Checker Framework 这样的第三方工具，自动检查和确认软件的缺陷，提高生产效率。</p>
+<p>例如，下面的代码可以通过编译，但是运行时会报 NullPointerException 的异常。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TestAnno</span> &#123;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>)</span> &#123;</span><br><span class="line">Object obj = <span class="literal">null</span>;</span><br><span class="line">obj.toString();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了能在编译期间就自动检查出这类异常，可以通过类型注解结合 Checker Framework 提前排查出来：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.checkerframework.checker.nullness.qual.NonNull;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestAnno</span> </span>&#123;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"><span class="meta">@NonNull</span> Object obj = <span class="keyword">null</span>;</span><br><span class="line">obj.toString();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>编译时自动检测结果如下：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">C:</span>\workspace\TestJava8\src\TestAnno.<span class="string">java:</span><span class="number">4</span>: <span class="string">Warning:</span></span><br><span class="line">  (assignment.type.incompatible) $$ <span class="number">2</span> $$ <span class="literal">null</span> $$ <span class="meta">@UnknownInitialization</span> <span class="meta">@NonNull</span> Object $$ ( <span class="number">152</span>, <span class="number">156</span> )</span><br><span class="line">  $$ incompatible types <span class="keyword">in</span> assignment.</span><br><span class="line"><span class="meta">@NonNull</span> Object obj = <span class="literal">null</span>;</span><br><span class="line"> ^</span><br><span class="line"> <span class="string">found :</span> <span class="literal">null</span></span><br><span class="line"><span class="symbol"> required:</span> <span class="meta">@UnknownInitialization</span> <span class="meta">@NonNull</span> Object</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>重复注解</li>
+</ul>
+<p>另外，在该版本之前使用注解的一个限制是相同的注解在同一位置只能声明一次，不能声明多次。Java 8 引入了重复注解机制，这样相同的注解可以在同一地方声明多次。重复注解机制本身必须用 @Repeatable 注解。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span> \\该注解存在于类文件中并在运行时可以通过反射获取</span><br><span class="line"><span class="meta">@interface</span> Annots &#123;</span><br><span class="line">Annot[] value();</span><br><span class="line">&#125; </span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span> \\该注解存在于类文件中并在运行时可以通过反射获取</span><br><span class="line"><span class="meta">@Repeatable(Annots.class)</span></span><br><span class="line"><span class="meta">@interface</span> Annot &#123;</span><br><span class="line">String value();</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Annot(<span class="meta-string">"a1"</span>)</span><span class="meta">@Annot(<span class="meta-string">"a2"</span>)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line"><span class="keyword">public</span> static void main(String[] args) &#123;</span><br><span class="line">Annots annots1 = Test.<span class="keyword">class</span>.getAnnotation(Annots.<span class="keyword">class</span>);</span><br><span class="line">System.<span class="keyword">out</span>.println(annots1.value()[<span class="number">0</span>]+<span class="string">","</span>+annots1.value()[<span class="number">1</span>]); </span><br><span class="line"><span class="comment">// 输出: @Annot(value=a1),@Annot(value=a2)</span></span><br><span class="line">Annot[] annots2 = Test.<span class="keyword">class</span>.getAnnotationsByType(Annot.<span class="keyword">class</span>);</span><br><span class="line">System.<span class="keyword">out</span>.println(annots2[<span class="number">0</span>]+<span class="string">","</span>+annots2[<span class="number">1</span>]); </span><br><span class="line"><span class="comment">// 输出: @Annot(value=a1),@Annot(value=a2)</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注释 Annot 被 @Repeatable( Annots.class ) 注解。Annots 只是一个容器，它包含 Annot 数组, 编译器尽力向程序员隐藏它的存在。通过这样的方式，Test 类可以被 Annot 注解两次。重复注释的类型可以通过 getAnnotationsByType() 方法来返回。</p>
+<h3 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h3><p>Java 8 在安全性上对许多方面进行了增强，也为此推迟了它的发布日期。下面例举其中几个关于安全性的更新：</p>
+<p>支持更强的基于密码的加密算法。基于 AES 的加密算法，例如 PBEWithSHA256AndAES_128 和 PBEWithSHA512AndAES_256，已经被加入进来。</p>
+<p>在客户端，TLS1.1 和 TLS1.2 被设为默认启动。并且可以通过新的系统属性包 jdk.tls.client.protocols 来对它进行配置。</p>
+<p>Keystore 的增强，包含新的 Keystore 类型 java.security.DomainLoadStoreParameter 和为 Keytool 这个安全钥匙和证书的管理工具添加新的命令行选项-importpassword。同时，添加和更新了一些关于安全性的 API 来支持 KeyStore 的更新。</p>
+<p>支持安全的随机数发生器。如果随机数来源于随机性不高的种子，那么那些用随机数来产生密钥或者散列敏感信息的系统就更易受攻击。SecureRandom 这个类的 getInstanceStrong 方法如今可以获取各个平台最强的随机数对象实例，通过这个实例生成像 RSA 私钥和公钥这样具有较高熵的随机数。</p>
+<p>安全性比较差的加密方法被默认禁用。默认不支持 DES 相关的 Kerberos 5 加密方法。如果一定要使用这类弱加密方法需要在 krb5.conf 文件中添加 allow_weak_crypto=true。考虑到这类加密方法安全性极差，开发者应该尽量避免使用它。</p>
+<h3 id="IO-NIO的改进"><a href="#IO-NIO的改进" class="headerlink" title="IO/NIO的改进"></a>IO/NIO的改进</h3><p>Java 8 对 IO/NIO 也做了一些改进。主要包括：改进了 java.nio.charset.Charset 的实现，使编码和解码的效率得以提升，也精简了 jre/lib/charsets.jar 包；优化了 String(byte[],*) 构造方法和 String.getBytes() 方法的性能；还增加了一些新的 IO/NIO 方法，使用这些方法可以从文件或者输入流中获取流（java.util.stream.Stream），通过对流的操作，可以简化文本行处理、目录遍历和文件查找。</p>
+<p>新增的 API 如下：<br>BufferedReader.line(): 返回文本行的流 Stream<string><br>File.lines(Path, Charset):返回文本行的流 Stream<string><br>File.list(Path): 遍历当前目录下的文件和目录<br>File.walk(Path, int, FileVisitOption): 遍历某一个目录下的所有文件和指定深度的子目录<br>File.find(Path, int, BiPredicate, FileVisitOption… ): 查找相应的文件</string></string></p>
+<p>下面就是用流式操作列出当前目录下的所有文件和目录：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">Files</span><span class="selector-class">.list</span>(<span class="selector-tag">new</span> <span class="selector-tag">File</span>(".")<span class="selector-class">.toPath</span>())</span><br><span class="line"> <span class="selector-class">.forEach</span>(<span class="selector-tag">System</span><span class="selector-class">.out</span><span class="selector-pseudo">::println)</span>;</span><br></pre></td></tr></table></figure></p>
+<h3 id="全球化功能"><a href="#全球化功能" class="headerlink" title="全球化功能"></a>全球化功能</h3><p>Java 8 吸收了 Joda-Time 的精华，以一个新的开始为 Java 创建优秀的 API。新的 java.time 中包含了所有关于时钟（Clock），本地日期（LocalDate）、本地时间（LocalTime）、本地日期时间（LocalDateTime）、时区（ZonedDateTime）和持续时间（Duration）的类。历史悠久的 Date 类新增了 toInstant() 方法，用于把 Date 转换成新的表示形式。这些新增的本地化时间日期 API 大大简化了了日期时间和本地化的管理。</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">LocalDate localDate = LocalDate.now(); <span class="comment">//获取本地日期</span></span><br><span class="line">localDate = LocalDate.ofYearDay(2014, 200); <span class="comment">// 获得 2014 年的第 200 天 </span></span><br><span class="line">System.<span class="keyword">out</span>.println(localDate.<span class="keyword">toString</span>());<span class="comment">//输出：2014-07-19</span></span><br><span class="line">localDate = LocalDate.of(2014, Month.SEPTEMBER, 10); <span class="comment">//2014 年 9 月 10 日 </span></span><br><span class="line">System.<span class="keyword">out</span>.println(localDate.<span class="keyword">toString</span>());<span class="comment">//输出：2014-09-10</span></span><br><span class="line"><span class="comment">//LocalTime</span></span><br><span class="line">LocalTime localTime = LocalTime.now(); <span class="comment">//获取当前时间</span></span><br><span class="line">System.<span class="keyword">out</span>.println(localTime.<span class="keyword">toString</span>());<span class="comment">//输出当前时间</span></span><br><span class="line">localTime = LocalTime.of(10, 20, 50);<span class="comment">//获得 10:20:50 的时间点</span></span><br><span class="line">System.<span class="keyword">out</span>.println(localTime.<span class="keyword">toString</span>());<span class="comment">//输出: 10:20:50</span></span><br><span class="line"><span class="comment">//Clock 时钟</span></span><br><span class="line">Clock clock = Clock.systemDefaultZone();<span class="comment">//获取系统默认时区 (当前瞬时时间 )</span></span><br><span class="line">long millis = clock.millis();<span class="comment">//</span></span><br></pre></td></tr></table></figure>
+<h3 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h3><p>在新增Stream机制与lambda的基础之上，在java.util.concurrent.ConcurrentHashMap中加入了一些新方法来支持聚集操作。同时也在java.util.concurrent.ForkJoinPool类中加入了一些新方法来支持共有资源池（common pool）</p>
+<p>新增的java.util.concurrent.locks.StampedLock类提供一直基于容量的锁，这种锁有三个模型来控制读写操作（它被认为是不太有名的java.util.concurrent.locks.ReadWriteLock类的替代者）。</p>
+<p>在java.util.concurrent.atomic包中还增加了下面这些类</p>
+<ul>
+<li>DoubleAccumulator</li>
+<li>DoubleAdder</li>
+<li>LongAccumulator</li>
+<li>LongAdder</li>
+</ul>
+<p>使用了java.util.concurrent.atomic则这些操作都是具有原子性的。<br>【注意】<br>对于32位操作系统来说，单次次操作能处理的最长长度为32bit，而long类型8字节64bit，所以对long的读写都要两条指令才能完成（即每次读写64bit中的32bit）。如果JVM要保证long和double读写的原子性，势必要做额外的处理。 那么，JVM有对这一情况进行额外处理吗？<br>针对这一问题可以参考Java语言规范文档：<a href="http://docs.oracle.com/javase/specs/jls/se8/html/jls-17.html#jls-17.7" target="_blank" rel="noopener">jls-17 Non-Atomic Treatment of double and long</a></p>
+<p>从规定中我们可以知道:</p>
+<ol>
+<li>对于64位的long和double，如果没有被volatile修饰，那么对其操作可以不是原子的。在操作的时候，可以分成两步，每次对32位操作。</li>
+<li>如果使用volatile修饰long和double，那么其读写都是原子操作</li>
+<li>对于64位的引用地址的读写，都是原子操作</li>
+<li>在实现JVM时，可以自由选择是否把读写long和double作为原子操作</li>
+<li>推荐JVM实现为原子操作</li>
+</ol>
+<p>对于64bit的环境来说，单次操作可以操作64bit的数据，即可以以一次性读写long或double的整个64bit。因此在64位的环境下，long和double的读写是原子操作。</p>
+<h3 id="JVM的新特性"><a href="#JVM的新特性" class="headerlink" title="JVM的新特性"></a>JVM的新特性</h3><p>JVM内存永久区已经被metaspace替换（JEP 122）。JVM参数 -XX:PermSize 和 –XX:MaxPermSize被XX:MetaSpaceSize 和 -XX:MaxMetaspaceSize代替。</p>
+<h2 id="Java-7-0"><a href="#Java-7-0" class="headerlink" title="Java 7.0"></a>Java 7.0</h2><h3 id="switch中可以使用字串"><a href="#switch中可以使用字串" class="headerlink" title="switch中可以使用字串"></a>switch中可以使用字串</h3><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Java代码： </span><br><span class="line"></span><br><span class="line"><span class="keyword">String</span> s = <span class="string">"test"</span>;   </span><br><span class="line"></span><br><span class="line"><span class="built_in">switch</span> (s) &#123;   </span><br><span class="line"></span><br><span class="line">  <span class="built_in">case</span> <span class="string">"test"</span> :   </span><br><span class="line"></span><br><span class="line">     System.out.<span class="built_in">println</span>(<span class="string">"test"</span>);  </span><br><span class="line"></span><br><span class="line">  <span class="built_in">case</span> <span class="string">"test1"</span> :   </span><br><span class="line"></span><br><span class="line">    System.out.<span class="built_in">println</span>(<span class="string">"test1"</span>); </span><br><span class="line"></span><br><span class="line">    <span class="built_in">break</span> ;   </span><br><span class="line"></span><br><span class="line">  <span class="built_in">default</span> :   </span><br><span class="line"></span><br><span class="line">    System.out.<span class="built_in">println</span>(<span class="string">"break"</span>); </span><br><span class="line"></span><br><span class="line">    <span class="built_in">break</span> ;   </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="对集合类的语言支持；"><a href="#对集合类的语言支持；" class="headerlink" title="对集合类的语言支持；"></a>对集合类的语言支持；</h3><p>Java将包含对创建集合类的第一类语言支持。这意味着集合类的创建可以像Ruby和Perl那样了。创建List / Set / Map 时写法更简单了。</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Java 1.7以前</span></span><br><span class="line"><span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; <span class="built_in">list</span> = <span class="literal">new</span> ArrayList&lt;<span class="built_in">String</span>&gt;(); </span><br><span class="line"></span><br><span class="line"><span class="built_in">list</span>.add(<span class="string">"item"</span>); </span><br><span class="line"></span><br><span class="line"><span class="built_in">String</span> item = <span class="built_in">list</span>.get(<span class="number">0</span>); </span><br><span class="line">         </span><br><span class="line"><span class="built_in">Set</span>&lt;<span class="built_in">String</span>&gt; <span class="built_in">set</span> = <span class="literal">new</span> HashSet&lt;<span class="built_in">String</span>&gt;(); </span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span>.add(<span class="string">"item"</span>); </span><br><span class="line"></span><br><span class="line"><span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">Integer</span>&gt; <span class="built_in">map</span> = <span class="literal">new</span> HashMap&lt;<span class="built_in">String</span>, <span class="built_in">Integer</span>&gt;(); </span><br><span class="line"></span><br><span class="line"><span class="built_in">map</span>.put(<span class="string">"key"</span>, <span class="number">1</span>); </span><br><span class="line"></span><br><span class="line">int value = <span class="built_in">map</span>.get(<span class="string">"key"</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Java 1.7支持</span></span><br><span class="line"><span class="built_in">List</span>&lt; <span class="built_in">String</span>&gt; list = [<span class="string">"item"</span>];  </span><br><span class="line"></span><br><span class="line"><span class="built_in">String</span> item = list[<span class="number">0</span>];  </span><br><span class="line"></span><br><span class="line"><span class="built_in">Set</span>&lt; <span class="built_in">String</span> &gt; <span class="keyword">set</span> = &#123;<span class="string">"item"</span>&#125;;  </span><br><span class="line"></span><br><span class="line"><span class="built_in">Map</span>&lt; <span class="built_in">String</span>,Integer &gt; map = &#123;<span class="string">"key"</span> : <span class="number">1</span>&#125;;  </span><br><span class="line"></span><br><span class="line"><span class="built_in">int</span> value = map[<span class="string">"key"</span>];</span><br></pre></td></tr></table></figure>
+<h3 id="自动资源管理；"><a href="#自动资源管理；" class="headerlink" title="自动资源管理；"></a>自动资源管理；</h3><p>Java中某些资源是需要手动关闭的，如InputStream，Writes，Sockets，Sql classes等。这个新的语言特性允许try语句本身申请更多的资源， </p>
+<p>这些资源作用于try代码块，并自动关闭。<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Java 1.7以前</span></span><br><span class="line"><span class="keyword">BufferedReader</span> br = <span class="keyword">new</span> <span class="keyword">BufferedReader</span>(<span class="keyword">new</span> FileReader(path)); </span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123; </span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> br.readLine(); </span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">finally</span> &#123; </span><br><span class="line"></span><br><span class="line">	br.close(); </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Java 1.7支持</span></span><br><span class="line"> <span class="keyword">try</span> (BufferedReader br = <span class="keyword">new</span> <span class="type">BufferedReader</span>(<span class="keyword">new</span> <span class="type">FileReader</span>(path)) &#123; </span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> br.readLine(); </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="改进的通用实例创建类型推断；"><a href="#改进的通用实例创建类型推断；" class="headerlink" title="改进的通用实例创建类型推断；"></a>改进的通用实例创建类型推断；</h3><p>Java 1.7增强的对通用实例创建（diamond）的类型推断 </p>
+<p>类型推断是一个特殊的烦恼，下面的代码：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt;&gt; anagrams = <span class="keyword">new</span> HashMap&lt;<span class="built_in">String</span>, <span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt;&gt;();</span><br></pre></td></tr></table></figure></p>
+<p>通过类型推断后变成：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt;&gt; anagrams = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br></pre></td></tr></table></figure></p>
+<p>这个&lt;&gt;被叫做diamond（钻石）运算符，这个运算符从引用的声明中推断类型。 </p>
+<h3 id="数字字面量下划线支持；"><a href="#数字字面量下划线支持；" class="headerlink" title="数字字面量下划线支持；"></a>数字字面量下划线支持；</h3><p>很长的数字可读性不好，在Java 7中可以使用下划线分隔长int以及long了<br><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int one_million = <span class="number">1</span>_000_000<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>运算时先去除下划线，如：1_1 * 10 = 110，120 – 1_0 = 110 </p>
+<h3 id="二进制字面量；"><a href="#二进制字面量；" class="headerlink" title="二进制字面量；"></a>二进制字面量；</h3><p>由于继承C语言，Java代码在传统上迫使程序员只能使用十进制，八进制或十六进制来表示数(numbers)。 </p>
+<p>由于很少的域是以bit导向的，这种限制可能导致错误。你现在可以使用0b前缀创建二进制字面量：<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> <span class="built_in">binary</span> = <span class="number">0b1001</span>_1001<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="简化可变参数方法调用；"><a href="#简化可变参数方法调用；" class="headerlink" title="简化可变参数方法调用；"></a>简化可变参数方法调用；</h3><p>程序员试图使用一个不可具体化的可变参数并调用一个<em>varargs</em> （可变）方法时，编辑器会生成一个“非安全操作”的警告。 </p>
+<p>JDK 7将警告从call转移到了方法声明(methord declaration)的过程中。这样API设计者就可以使用vararg，因为警告的数量大大减少了。 </p>
+<h3 id="新增一些取环境信息的工具方法；"><a href="#新增一些取环境信息的工具方法；" class="headerlink" title="新增一些取环境信息的工具方法；"></a>新增一些取环境信息的工具方法；</h3><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">File</span> <span class="keyword">System</span>.getJavaIoTempDir()  <span class="comment">// IO临时文件夹    </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">File</span> <span class="keyword">System</span>.getJavaHomeDir() <span class="comment">// JRE的安装目录    </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">File</span> <span class="keyword">System</span>.getUserHomeDir() <span class="comment">// 当前用户目录    </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">File</span> <span class="keyword">System</span>.getUserDir() <span class="comment">// 启动java进程时所在的目录</span></span><br></pre></td></tr></table></figure>
+<h3 id="Boolean类型反转，空指针安全-参与位运算；"><a href="#Boolean类型反转，空指针安全-参与位运算；" class="headerlink" title="Boolean类型反转，空指针安全,参与位运算；"></a>Boolean类型反转，空指针安全,参与位运算；</h3><figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Boolean</span> Booleans.negate(<span class="keyword">Boolean</span> booleanObj)   </span><br><span class="line"></span><br><span class="line"><span class="keyword">True</span> =&gt; <span class="keyword">False</span> , <span class="keyword">False</span> =&gt; <span class="keyword">True</span>, <span class="keyword">Null</span> =&gt; <span class="keyword">Null</span>   </span><br><span class="line"></span><br><span class="line"><span class="keyword">boolean</span>  Booleans.<span class="keyword">and</span>( <span class="keyword">boolean</span> [] <span class="keyword">array</span>)   </span><br><span class="line"></span><br><span class="line"><span class="keyword">boolean</span>  Booleans.<span class="keyword">or</span>( <span class="keyword">boolean</span> [] <span class="keyword">array</span>)   </span><br><span class="line"></span><br><span class="line"><span class="keyword">boolean</span>  Booleans.<span class="keyword">xor</span>( <span class="keyword">boolean</span> [] <span class="keyword">array</span>)   </span><br><span class="line"></span><br><span class="line"><span class="keyword">boolean</span>  Booleans.<span class="keyword">and</span>(<span class="keyword">Boolean</span>[] <span class="keyword">array</span>)   </span><br><span class="line"></span><br><span class="line"><span class="keyword">boolean</span>  Booleans.<span class="keyword">or</span>(<span class="keyword">Boolean</span>[] <span class="keyword">array</span>)   </span><br><span class="line"></span><br><span class="line"><span class="keyword">boolean</span>  Booleans.<span class="keyword">xor</span>(<span class="keyword">Boolean</span>[] <span class="keyword">array</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="两个char间的equals；"><a href="#两个char间的equals；" class="headerlink" title="两个char间的equals；"></a>两个char间的equals；</h3><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">boolean</span>  Character.equalsIgnoreCase( <span class="keyword">char</span>  ch1,  <span class="keyword">char</span>  ch2)</span><br></pre></td></tr></table></figure>
+<h3 id="安全的加减乘除；"><a href="#安全的加减乘除；" class="headerlink" title="安全的加减乘除；"></a>安全的加减乘除；</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>  Math.safeToInt( <span class="keyword">long</span>  <span class="keyword">value</span>)   </span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span>  Math.safeNegate( <span class="keyword">int</span>  <span class="keyword">value</span>)   </span><br><span class="line"></span><br><span class="line"><span class="keyword">long</span>  Math.safeSubtract( <span class="keyword">long</span>  value1,  <span class="keyword">int</span>  value2)   </span><br><span class="line"></span><br><span class="line"><span class="keyword">long</span>  Math.safeSubtract( <span class="keyword">long</span>  value1,  <span class="keyword">long</span>  value2)   </span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span>  Math.safeMultiply( <span class="keyword">int</span>  value1,  <span class="keyword">int</span>  value2)   </span><br><span class="line"></span><br><span class="line"><span class="keyword">long</span>  Math.safeMultiply( <span class="keyword">long</span>  value1,  <span class="keyword">int</span>  value2)   </span><br><span class="line"></span><br><span class="line"><span class="keyword">long</span>  Math.safeMultiply( <span class="keyword">long</span>  value1,  <span class="keyword">long</span>  value2)   </span><br><span class="line"></span><br><span class="line"><span class="keyword">long</span>  Math.safeNegate( <span class="keyword">long</span>  <span class="keyword">value</span>)   </span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span>  Math.safeAdd( <span class="keyword">int</span>  value1,  <span class="keyword">int</span>  value2)   </span><br><span class="line"></span><br><span class="line"><span class="keyword">long</span>  Math.safeAdd( <span class="keyword">long</span>  value1,  <span class="keyword">int</span>  value2)   </span><br><span class="line"></span><br><span class="line"><span class="keyword">long</span>  Math.safeAdd( <span class="keyword">long</span>  value1,  <span class="keyword">long</span>  value2)   </span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span>  Math.safeSubtract( <span class="keyword">int</span>  value1,  <span class="keyword">int</span>  value2)</span><br></pre></td></tr></table></figure>
+<h3 id="G1垃圾回收器"><a href="#G1垃圾回收器" class="headerlink" title="G1垃圾回收器"></a>G1垃圾回收器</h3><p>平时工作中大多数系统都使用CMS、即使静默升级到JDK7默认仍然采用CMS、那么G1相对于CMS的区别在：</p>
+<ol>
+<li>G1在压缩空间方面有优势</li>
+<li>G1通过将内存空间分成区域（Region）的方式避免内存碎片问题</li>
+<li>Eden, Survivor, Old区不再固定、在内存使用效率上来说更灵活</li>
+<li>G1可以通过设置预期停顿时间（Pause Time）来控制垃圾收集时间避免应用雪崩现象</li>
+<li>G1在回收内存后会马上同时做合并空闲内存的工作、而CMS默认是在STW（stop the world）的时候做</li>
+<li>G1会在Young GC中使用、而CMS只能在O区使用</li>
+</ol>
+<h2 id="JAVA-6-0"><a href="#JAVA-6-0" class="headerlink" title="JAVA 6.0"></a>JAVA 6.0</h2><h3 id="Instrumentation-新功能"><a href="#Instrumentation-新功能" class="headerlink" title="Instrumentation 新功能"></a>Instrumentation 新功能</h3><p>Java SE 6 在 Instrumentation 方面的新特性。在 Java SE 6 里面，instrumentation 包被赋予了更强大的功能：启动后的instrument、本地代码 instrument，以及动态改变 classpath 等等。</p>
+<h3 id="HTTP-增强"><a href="#HTTP-增强" class="headerlink" title="HTTP 增强"></a>HTTP 增强</h3><p>在 Java SE 6 之前， Java 一直都没有提供 Cookie 管理的功能。在 Java SE 5 里面， java.net 包里面有一个 CookieHandler 抽象类，不过并没有提供其他具体的实现。到了 Java SE 6， Cookie 相关的管理类在 Java 类库里面才得到了实现。有了这些 Cookie 相关支持的类，Java 开发者可以在服务器端编程中很好的操作 Cookie， 更好的支持 HTTP 相关应用，创建有状态的 HTTP 会话。</p>
+<ul>
+<li><p>用 HttpCookie 代表 Cookie<br>java.net.HttpCookie 类是 Java SE 6 新增的一个表示 HTTP Cookie 的新类， 其对象可以表示 Cookie 的内容， 可以支持所有三种 Cookie 规范：<br>Netscape 草案<br>RFC 2109 - <a href="http://www.ietf.org/rfc/rfc2109.txt" target="_blank" rel="noopener">http://www.ietf.org/rfc/rfc2109.txt</a><br>RFC 2965 - <a href="http://www.ietf.org/rfc/rfc2965.txt" target="_blank" rel="noopener">http://www.ietf.org/rfc/rfc2965.txt</a><br>这个类储存了 Cookie 的名称，路径，值，协议版本号，是否过期，网络域，最大生命期等等信息。</p>
+</li>
+<li><p>用 CookiePolicy 规定 Cookie 接受策略<br>java.net.CookiePolicy 接口可以规定 Cookie 的接受策略。 其中唯一的方法用来判断某一特定的 Cookie 是否能被某一特定的地址所接受。 这个类内置了 3 个实现的子类。一个类接受所有的 Cookie，另一个则拒绝所有，还有一个类则接受所有来自原地址的 Cookie。</p>
+</li>
+<li><p>用 CookieStore 储存 Cookie<br>java.net.CookieStore 接口负责储存和取出 Cookie。 当有 HTTP 请求的时候，它便储存那些被接受的 Cookie； 当有 HTTP 回应的时候，它便取出相应的 Cookie。 另外，当一个 Cookie 过期的时候，它还负责自动删去这个 Cookie。</p>
+</li>
+<li><p>用 CookieManger/CookieHandler 管理 Cookie<br>java.net.CookieManager 是整个 Cookie 管理机制的核心，它是 CookieHandler 的默认实现子类。下图显示了整个 HTTP Cookie 管理机制的结构：</p>
+</li>
+</ul>
+<img src="/2017/08/04/jdk编年史/Cookie_管理类的关系.JPG" title="Cookie_管理类的关系">
+<p>一个 CookieManager 里面有一个 CookieStore 和一个 CookiePolicy，分别负责储存 Cookie 和规定策略。用户可以指定两者，也可以使用系统默认的 CookieManger。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个默认的 CookieManager </span></span><br><span class="line">CookieManager manager = <span class="keyword">new</span> CookieManager(); </span><br><span class="line"> </span><br><span class="line"><span class="comment">// 将规则改掉，接受所有的 Cookie </span></span><br><span class="line">manager.setCookiePolicy(CookiePolicy.ACCEPT_ALL); </span><br><span class="line"> </span><br><span class="line"><span class="comment">// 保存这个定制的 CookieManager </span></span><br><span class="line">CookieHandler.setDefault(manager); </span><br><span class="line">        </span><br><span class="line"><span class="comment">// 接受 HTTP 请求的时候，得到和保存新的 Cookie </span></span><br><span class="line">HttpCookie cookie = <span class="keyword">new</span> HttpCookie(<span class="string">"...(name)..."</span>,<span class="string">"...(value)..."</span>); </span><br><span class="line">manager.getCookieStore().add(uri, cookie); </span><br><span class="line">        </span><br><span class="line"><span class="comment">// 使用 Cookie 的时候：</span></span><br><span class="line"><span class="comment">// 取出 CookieStore        </span></span><br><span class="line">CookieStore store = manager.getCookieStore(); </span><br><span class="line"> </span><br><span class="line"><span class="comment">// 得到所有的 URI        </span></span><br><span class="line"><span class="built_in">List</span>&lt;URI&gt; uris = store.getURIs(); </span><br><span class="line"><span class="keyword">for</span> (URI uri : uris) &#123; </span><br><span class="line">    <span class="comment">// 筛选需要的 URI </span></span><br><span class="line">    <span class="comment">// 得到属于这个 URI 的所有 Cookie </span></span><br><span class="line">    <span class="built_in">List</span>&lt;HttpCookie&gt; cookies = store.<span class="keyword">get</span>(uri); </span><br><span class="line">    <span class="keyword">for</span> (HttpCookie cookie : cookies) &#123; </span><br><span class="line">        <span class="comment">// 取出了 Cookie </span></span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line">        </span><br><span class="line"><span class="comment">// 或者，取出这个 CookieStore 里面的全部 Cookie </span></span><br><span class="line"><span class="comment">// 过期的 Cookie 将会被自动删除</span></span><br><span class="line"><span class="built_in">List</span>&lt;HttpCookie&gt; cookies = store.getCookies(); </span><br><span class="line"><span class="keyword">for</span> (HttpCookie cookie : cookies) &#123; </span><br><span class="line">    <span class="comment">// 取出了 Cookie </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>JDK1.6 提供了一个简单的Http Server API，据此我们可以构建自己的嵌入式Http Server，它支持Http和Https协议，提供了HTTP1.1的部分实现，没有被实现的那部分可以通过扩展已有的Http Server API来实现，程序员必须自己实现HttpHandler接口，HttpServer会调用HttpHandler实现类的回调方法来处理客户端请求，在这里，我们把一个Http请求和它的响应称为一个交换，包装成HttpExchange类，HttpServer负责将HttpExchange传给HttpHandler实现类的回调方法。</p>
+<h3 id="使用JAXB2来实现对象与XML之间的映射"><a href="#使用JAXB2来实现对象与XML之间的映射" class="headerlink" title="使用JAXB2来实现对象与XML之间的映射"></a>使用JAXB2来实现对象与XML之间的映射</h3><p>JAXB是Java Architecture for XML Binding的缩写，可以将一个Java对象转变成为XML格式，反之亦然。<br>我们把对象与关系数据库之间的映射称为ORM，其实也可以把对象与XML之间的映射称为OXM(Object XML Mapping)。原来JAXB是Java EE的一部分，在JDK1.6中，SUN将其放到了Java SE中，这也是SUN的一贯做法。JDK1.6中自带的这个JAXB版本是2.0，比起1.0(JSR 31)来，JAXB2(JSR 222)用JDK5的新特性Annotation来标识要作绑定的类和属性等，这就极大简化了开发的工作量。实际上，在Java EE 5.0中，EJB和Web Services也通过Annotation来简化开发工作。另外，JAXB2在底层是用StAX(JSR 173)来处理XML文档。<br>    除了JAXB之外，我们还可以通过XMLBeans和Castor等来实现同样的功能。</p>
+<h3 id="脚本语言支持"><a href="#脚本语言支持" class="headerlink" title="脚本语言支持"></a>脚本语言支持</h3><p>支持ruby，groovy，javascript。</p>
+<p>Java SE 6 还为运行脚本添加了一个专门的工具 —— jrunscript。jrunscript 支持两种运行方式：一种是交互式，即边读取边解析运行，这种方式使得用户可以方便调试脚本程序，马上获取预期结果；还有一种就是批处理式，即读取并运行整个脚本文件。用户可以把它想象成一个万能脚本解释器，即它可以运行任意脚本程序，而且它还是跨平台的，当然所有这一切都有一个前提，那就是必须告诉它相应的脚本引擎的位置。默认即支持的脚本是 JavaScript，这意味着用户可以无需任何设置，通过 jrunscript 在任何支持 Java 的平台上运行任何 JavaScript 脚本；如果想运行其他脚本，可以通过 -l 指定以何种脚本引擎运行脚本。不过这个工具仍是实验性质的，不一定会包含在 Java 的后续版本中，无论如何，它仍是一个非常有用的工具。</p>
+<h3 id="Java-DB-和-JDBC-4-0"><a href="#Java-DB-和-JDBC-4-0" class="headerlink" title="Java DB 和 JDBC 4.0"></a>Java DB 和 JDBC 4.0</h3><p>新安装了 JDK 6 的程序员们也许会发现，除了传统的 bin、jre 等目录，JDK 6 新增了一个名为 db 的目录。这便是 Java 6 的新成员：Java DB。这是一个纯 Java 实现、开源的数据库管理系统（DBMS），源于 Apache 软件基金会（ASF）名下的项目 Derby。它只有 2MB 大小，对比动辄上 G 的数据库来说可谓袖珍。但这并不妨碍 Derby 功能齐备，支持几乎大部分的数据库应用所需要的特性。更难能可贵的是，依托于 ASF 强大的社区力量，Derby 得到了包括 IBM 和 Sun 等大公司以及全世界优秀程序员们的支持。这也难怪 Sun 公司会选择其 10.2.2 版本纳入到 JDK 6 中，作为内嵌的数据库。</p>
+<h3 id="编译器API"><a href="#编译器API" class="headerlink" title="编译器API"></a>编译器API</h3><p>JDK 6 提供了在运行时调用编译器的 API，后面我们将假设把此 API 应用在 JSP 技术中。在传统的 JSP 技术中，服务器处理 JSP 通常需要进行下面 6 个步骤：</p>
+<ol>
+<li>分析 JSP 代码；</li>
+<li>生成 Java 代码；</li>
+<li>将 Java 代码写入存储器；</li>
+<li>启动另外一个进程并运行编译器编译 Java 代码；</li>
+<li>将类文件写入存储器；</li>
+<li>服务器读入类文件并运行；<br>但如果采用运行时编译，可以同时简化步骤 4 和 5，节约新进程的开销和写入存储器的输出开销，提高系统效率。实际上，在 JDK 5 中，Sun 也提供了调用编译器的编程接口。然而不同的是，老版本的编程接口并不是标准 API 的一部分，而是作为 Sun 的专有实现提供的，而新版则带来了标准化的优点。<br>新 API 的第二个新特性是可以编译抽象文件，理论上是任何形式的对象 —— 只要该对象实现了特定的接口。有了这个特性，上述例子中的步骤 3 也可以省略。整个 JSP 的编译运行在一个进程中完成，同时消除额外的输入输出操作。<br>第三个新特性是可以收集编译时的诊断信息。作为对前两个新特性的补充，它可以使开发人员轻松的输出必要的编译错误或者是警告信息，从而省去了很多重定向的麻烦。</li>
+</ol>
+<h2 id="JAVA-5-0"><a href="#JAVA-5-0" class="headerlink" title="JAVA 5.0"></a>JAVA 5.0</h2><h3 id="自动装箱-拆箱-Auto-Boxing-Unboxing"><a href="#自动装箱-拆箱-Auto-Boxing-Unboxing" class="headerlink" title="自动装箱/拆箱(Auto-Boxing/Unboxing)"></a>自动装箱/拆箱(Auto-Boxing/Unboxing)</h3><p>没有自动装箱/拆箱：<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> <span class="keyword">int1</span> = <span class="number">1</span><span class="comment">;</span></span><br><span class="line">Integer integer2 = new Integer(<span class="keyword">int1</span>)<span class="comment">;</span></span><br><span class="line"><span class="keyword">int</span> <span class="keyword">int3</span> = integer2.intValue()<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>有自动装箱/拆箱：<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> <span class="keyword">int1</span> = <span class="number">1</span><span class="comment">;</span></span><br><span class="line">Integer integer2 = <span class="keyword">int1</span><span class="comment">;     // 自動裝箱</span></span><br><span class="line"><span class="keyword">int</span> <span class="keyword">int3</span> = integer2<span class="comment">;         // 自動拆箱</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="泛型-Generic-Types"><a href="#泛型-Generic-Types" class="headerlink" title="泛型(Generic Types)"></a>泛型(Generic Types)</h3><p>泛型就像是C++的模板。原有的Collection API加上泛型支持后，增加对类型的检查，减少程序错误的机会。</p>
+<h3 id="注释-Annotation"><a href="#注释-Annotation" class="headerlink" title="注释(Annotation)"></a>注释(Annotation)</h3><p>Java的注释是一种接口 (interface)，继承自java.lang.annotation.Annotation。Class File则粘贴ACC_ANNOTATION标签。<br>从5.0开始，javadoc的@deprecated(代表不建议使用的方法或类别)也被Annotation中的@Deprecated取代；另外，使用Java 实现SOP的AspectJ与Spring也使用了大量的Annotation。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JDK 1.4</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @todo to be implemented</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">gimmeSomeLoving</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"not implemented"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JDK 1.5</span></span><br><span class="line"><span class="meta">@todo</span> <span class="function"><span class="keyword">void</span> <span class="title">gimmeSomeLoving</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"not implemented"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="枚举类型-enum"><a href="#枚举类型-enum" class="headerlink" title="枚举类型(enum)"></a>枚举类型(enum)</h3><p>枚举类型也是J2SE 5.0的新功能。过去Java认为enum的关键字是不必要的功能，因为用public static int field就可以取代enum，因此过去一直不用。J2SE 5.0中的class如果是enum，在class file中会被粘贴一个ACC_ENUM标签。</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JDK 1.4</span></span><br><span class="line"> <span class="class"><span class="keyword">class</span> <span class="title">JavaTech</span> </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> J2ME = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> J2SE = <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> J2EE = <span class="number">3</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JDK 1.5</span></span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">NewJavaTech</span> &#123;</span></span><br><span class="line">        J2ME, J2SE, J2EE</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="字符国际化"><a href="#字符国际化" class="headerlink" title="字符国际化"></a>字符国际化</h3><p>Java语言严格区分字节和字符。字符的存储格式为UCS-2，也就是只能使用位于基本多文种平面的字符，从Java 5开始支持UTF-16字符。<br>另外，从5.0开始Java的程序也开始可以使用Unicode字符进行命名。</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">String</span>文本 = <span class="string">"HelloWorld"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h3><p>在jdk1.5及其以后版本中，java.util.Scanner和java.util.Formatter类别被应用到输入输出中。另外，也出现了类似C语言的printf()函数。</p>
+<h3 id="foreach-循环"><a href="#foreach-循环" class="headerlink" title="foreach 循环"></a>foreach 循环</h3><p>foreach循环，有时又称forin循环，在许多编程语言（包括C#、Ruby、JavaScript）中都有出现，可以直接将一个Array或Map展开，而不必程序员自行检查边界，可以有效减少错误的机会。</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] array1 = &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">for</span>(<span class="keyword">int</span> i : array1)&#123; <span class="comment">// foreach迴圈</span></span><br><span class="line">    System.out.<span class="built_in">println</span>(<span class="string">"Number: "</span>+i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="可变长度引数"><a href="#可变长度引数" class="headerlink" title="可变长度引数"></a>可变长度引数</h3><p>长久以来一直有用户要求加入printf()函数，受限于Java函数必须要有固定引数的限制，始终无法实现，在加入这个功能之后，连带printf()也变为可能。</p>
+<h3 id="static引入"><a href="#static引入" class="headerlink" title="static引入"></a>static引入</h3><p>这个特性允许程序员将一个类别中的静态内容引入到程序中。<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="meta"><span class="meta-keyword">import</span> java.lang.System.*;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String args[])&#123;</span><br><span class="line">        out.println(<span class="string">"Hello World."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="线程并发库"><a href="#线程并发库" class="headerlink" title="线程并发库"></a>线程并发库</h3><p>线程并发库是Java1.5提出的关于多线程处理的高级功能，所在包：java.util.concurrent包括</p>
+<ol>
+<li>线程互斥<br> 工具类描述：Lock，ReadWriteLock</li>
+<li>线程通信<br> 描述：Condition</li>
+<li>线程池<br> ExecutorService</li>
+<li>同步队列<br> ArrayBlockingQueue</li>
+<li>同步集合<br> ConcurrentHashMap，CopyOnWriteArrayList</li>
+<li>线程同步工具<br> Semaphore</li>
+</ol>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/08/04/jdk编年史/">jdk编年史</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">wjExcceed</a></p>
+        <p><span>发布时间:</span>2017-08-04, 19:57:58</p>
+        <p><span>最后更新:</span>2019-07-15, 10:16:33</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/08/04/jdk编年史/" title="jdk编年史">/2017/08/04/jdk编年史/</a>
+            <span class="copy-path" data-clipboard-text="原文: /2017/08/04/jdk编年史/　　作者: wjExcceed" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/08/07/OAuth浅析/">
+                    OAuth浅析
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/08/02/java高并发/">
+                    java高并发
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-8-0"><span class="toc-number">1.</span> <span class="toc-text">Java 8.0</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数式接口"><span class="toc-number">1.1.</span> <span class="toc-text">函数式接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lambda表达式"><span class="toc-number">1.2.</span> <span class="toc-text">Lambda表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口的增强"><span class="toc-number">1.3.</span> <span class="toc-text">接口的增强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#集合之流式操作"><span class="toc-number">1.4.</span> <span class="toc-text">集合之流式操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注解的更新"><span class="toc-number">1.5.</span> <span class="toc-text">注解的更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全性"><span class="toc-number">1.6.</span> <span class="toc-text">安全性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IO-NIO的改进"><span class="toc-number">1.7.</span> <span class="toc-text">IO/NIO的改进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全球化功能"><span class="toc-number">1.8.</span> <span class="toc-text">全球化功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#并发"><span class="toc-number">1.9.</span> <span class="toc-text">并发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM的新特性"><span class="toc-number">1.10.</span> <span class="toc-text">JVM的新特性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-7-0"><span class="toc-number">2.</span> <span class="toc-text">Java 7.0</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#switch中可以使用字串"><span class="toc-number">2.1.</span> <span class="toc-text">switch中可以使用字串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对集合类的语言支持；"><span class="toc-number">2.2.</span> <span class="toc-text">对集合类的语言支持；</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自动资源管理；"><span class="toc-number">2.3.</span> <span class="toc-text">自动资源管理；</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#改进的通用实例创建类型推断；"><span class="toc-number">2.4.</span> <span class="toc-text">改进的通用实例创建类型推断；</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数字字面量下划线支持；"><span class="toc-number">2.5.</span> <span class="toc-text">数字字面量下划线支持；</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二进制字面量；"><span class="toc-number">2.6.</span> <span class="toc-text">二进制字面量；</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简化可变参数方法调用；"><span class="toc-number">2.7.</span> <span class="toc-text">简化可变参数方法调用；</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#新增一些取环境信息的工具方法；"><span class="toc-number">2.8.</span> <span class="toc-text">新增一些取环境信息的工具方法；</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Boolean类型反转，空指针安全-参与位运算；"><span class="toc-number">2.9.</span> <span class="toc-text">Boolean类型反转，空指针安全,参与位运算；</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#两个char间的equals；"><span class="toc-number">2.10.</span> <span class="toc-text">两个char间的equals；</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全的加减乘除；"><span class="toc-number">2.11.</span> <span class="toc-text">安全的加减乘除；</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#G1垃圾回收器"><span class="toc-number">2.12.</span> <span class="toc-text">G1垃圾回收器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JAVA-6-0"><span class="toc-number">3.</span> <span class="toc-text">JAVA 6.0</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Instrumentation-新功能"><span class="toc-number">3.1.</span> <span class="toc-text">Instrumentation 新功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-增强"><span class="toc-number">3.2.</span> <span class="toc-text">HTTP 增强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用JAXB2来实现对象与XML之间的映射"><span class="toc-number">3.3.</span> <span class="toc-text">使用JAXB2来实现对象与XML之间的映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#脚本语言支持"><span class="toc-number">3.4.</span> <span class="toc-text">脚本语言支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java-DB-和-JDBC-4-0"><span class="toc-number">3.5.</span> <span class="toc-text">Java DB 和 JDBC 4.0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编译器API"><span class="toc-number">3.6.</span> <span class="toc-text">编译器API</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JAVA-5-0"><span class="toc-number">4.</span> <span class="toc-text">JAVA 5.0</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#自动装箱-拆箱-Auto-Boxing-Unboxing"><span class="toc-number">4.1.</span> <span class="toc-text">自动装箱/拆箱(Auto-Boxing/Unboxing)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#泛型-Generic-Types"><span class="toc-number">4.2.</span> <span class="toc-text">泛型(Generic Types)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注释-Annotation"><span class="toc-number">4.3.</span> <span class="toc-text">注释(Annotation)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#枚举类型-enum"><span class="toc-number">4.4.</span> <span class="toc-text">枚举类型(enum)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符国际化"><span class="toc-number">4.5.</span> <span class="toc-text">字符国际化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#输入输出"><span class="toc-number">4.6.</span> <span class="toc-text">输入输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#foreach-循环"><span class="toc-number">4.7.</span> <span class="toc-text">foreach 循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可变长度引数"><span class="toc-number">4.8.</span> <span class="toc-text">可变长度引数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#static引入"><span class="toc-number">4.9.</span> <span class="toc-text">static引入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程并发库"><span class="toc-number">4.10.</span> <span class="toc-text">线程并发库</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"jdk编年史　| 巴扎嘿的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section id="comments">
+    <style> aside.comment-bar { margin: auto 30px; }</style>
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function(){
+            this.page.url = '/2017/08/04/jdk编年史/';
+            this.page.identifier = '2017/08/04/jdk编年史/';
+        };
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = '//[object Object].disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+</section>
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/08/07/OAuth浅析/" title="上一篇: OAuth浅析">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/08/02/java高并发/" title="下一篇: java高并发">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/a/">a</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/28/Java内存模型——JMM/">Java内存模型——JMM</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/聊聊操作系统/">聊聊操作系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/I-O多路复用/">I/O多路复用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/TCP-UDP的归纳总结/">TCP/UDP的归纳总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/19/Cookie-Session机制/">Cookie/Session机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/关于mina的知识整理/">关于mina的知识整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/HttpEntity出现的java-io-IOException-Stream-Closed/">HttpEntity出现的java.io.IOException:Stream Closed</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/16/数据库连接池/">数据库连接池</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/14/网易秋招笔试题/">网易秋招笔试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/09/JVM/">JVM梳理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/07/OAuth浅析/">OAuth浅析</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/04/jdk编年史/">jdk编年史</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/02/java高并发/">java高并发</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/01/数据库的整理笔记/">数据库的整理笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/31/JIT/">JIT--即时编译</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/Computer Network/">数据链路层的要点</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2019 wjExcceed
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
